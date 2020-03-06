@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--<properties url="file:///C:/Users/lenovo/IdeaProjects/Mybatis/src/main/resources/jdbcConfig.properties"/>-->
+    <properties resource="jdbcConfig.properties"/>
+    <typeAliases>
+        <!--<typeAlias type="cn.itcast.domain.User" alias="user"></typeAlias>-->
+        <package name="cn.lbd.domain"/>
+    </typeAliases>
+    <plugins>
+        <!--<plugin interceptor="cn.lbd.dao.FirstPlugin">
+            <property name="username" value="zhangsan"/>
+            <property name="password" value="123456"/>
+        </plugin>
+        <plugin interceptor="cn.lbd.dao.SecondPlugin">
+            <property name="username" value="zhangsan"/>
+            <property name="password" value="123456"/>
+        </plugin>-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="param1" value="value1"/>
+        </plugin>
+    </plugins>
+
+<!-- 配置环境-->
+<environments default="mysql">
+    <!-- 配置mysql的环境-->
+    <environment id="mysql">
+        <!-- 配置事务的类型-->
+        <transactionManager type="JDBC"></transactionManager>
+        <!-- 配置数据源（连接池）-->
+        <dataSource type="POOLED">
+            <!-- 连接数据库的四个基本信息-->
+            <!--${}中的内容需要和jdbcConfig.properties中key名称一致-->
+            <property name="driver" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+        </dataSource>
+    </environment>
+</environments>
+
+<!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件.-->
+<mappers>
+    <package name="cn.lbd.dao"/>
+    <!--<mapper resource="cn/lbd/dao/UserDao.xml"/>-->
+    <!--<mapper url="file:///C:/Users/lenovo/IdeaProjects/Mybatis/src/main/resources/cn/lbd/dao/UserDao.xml"/>-->
+</mappers>
+</configuration>
